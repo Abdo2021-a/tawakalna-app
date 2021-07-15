@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:myphoto/provider/save_get_image.dart';
 import 'package:provider/provider.dart';
@@ -9,10 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'display_save_photo.dart';
 import 'displayphoto/display_photo.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(
     MultiProvider(
       providers: [
@@ -21,7 +20,6 @@ void main() async {
       child: Tawakkalna(),
     ),
   );
-
   //
 }
 
@@ -66,6 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
     Provider.of<GetSveImage>(context, listen: false).loadDateTime();
 
     Provider.of<GetSveImage>(context, listen: false).loadDateDayes();
+    Provider.of<GetSveImage>(context, listen: false).loadDx();
+    Provider.of<GetSveImage>(context, listen: false).loadDy();
+    Provider.of<GetSveImage>(context, listen: false).loadDxText();
+    Provider.of<GetSveImage>(context, listen: false).loadDyText();
   }
 
   delay() async {
@@ -74,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
         return LoadScreen();
         //
       }));
-
       // Provider.of<GetSveImage>(context, listen: false).imagepath == null
       //     ? Navigator.pushReplacement(context,
       //         MaterialPageRoute(builder: (context) {
@@ -91,12 +92,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print("abdodaaaaaaaaaaa  ${widget.pathpicture}");
     return Stack(
       children: [
         Container(
           child: Image.asset(
-            'images/twakalna.jpg',
+            'images/tawkln.jpg',
             height: double.infinity,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -186,7 +186,9 @@ class _LoadScreenState extends State<LoadScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Stream.periodic(Duration(seconds: 1), (a) => a),
+        stream: Stream.periodic(Duration(seconds: 1), (a) {
+          return a -= 30;
+        }),
         builder: (context, snapshot) {
           return Scaffold(
             body: Stack(
@@ -211,7 +213,7 @@ class _LoadScreenState extends State<LoadScreen> {
                 ),
                 Center(
                     child: Text(
-                  snapshot.hasData ? "${snapshot.data}" : '',
+                  snapshot.hasData ? "${snapshot.data.abs()}" : '',
                   style: TextStyle(
                       fontSize: 45,
                       fontWeight: FontWeight.bold,

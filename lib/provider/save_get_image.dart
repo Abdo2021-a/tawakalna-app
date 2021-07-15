@@ -10,6 +10,59 @@ class GetSveImage with ChangeNotifier {
   String imagepath;
   String datetime;
   String datedayes;
+  double dx;
+  double dy;
+  double dx_text;
+  double dy_text;
+
+  saveDxText() async {
+    SharedPreferences preferencesdx = await SharedPreferences.getInstance();
+    preferencesdx.setDouble("saveddxtext", dx_text);
+    notifyListeners();
+  }
+
+  loadDxText() async {
+    SharedPreferences preferencesdx = await SharedPreferences.getInstance();
+    dx_text = preferencesdx.getDouble("saveddxtext");
+    notifyListeners();
+  }
+
+  saveDyTrxt() async {
+    SharedPreferences preferencesdy = await SharedPreferences.getInstance();
+    preferencesdy.setDouble("savedytext", dy_text);
+    notifyListeners();
+  }
+
+  loadDyText() async {
+    SharedPreferences preferencesdy = await SharedPreferences.getInstance();
+    dy_text = preferencesdy.getDouble("savedytext");
+    notifyListeners();
+  }
+
+// ---------------------------------------
+  saveDx() async {
+    SharedPreferences preferencesdx = await SharedPreferences.getInstance();
+    preferencesdx.setDouble("savedx", dx);
+    notifyListeners();
+  }
+
+  loadDx() async {
+    SharedPreferences preferencesdx = await SharedPreferences.getInstance();
+    dx = preferencesdx.getDouble("savedx");
+    notifyListeners();
+  }
+
+  saveDy() async {
+    SharedPreferences preferencesdy = await SharedPreferences.getInstance();
+    preferencesdy.setDouble("savedy", dy);
+    notifyListeners();
+  }
+
+  loadDy() async {
+    SharedPreferences preferencesdy = await SharedPreferences.getInstance();
+    dy = preferencesdy.getDouble("savedy");
+    notifyListeners();
+  }
 
   chooseImage() async {
     var image = await ImagePicker().getImage(source: ImageSource.gallery);

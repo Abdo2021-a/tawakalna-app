@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,8 +12,29 @@ class DisplaySavePhoto extends StatefulWidget {
   _DisplaySavePhotoState createState() => _DisplaySavePhotoState();
 }
 
+//  dx = Provider.of<GetSveImage>(context, listen: false).dx;
+
 class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
-  Offset positionIcon = Offset(200, 700);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // Provider.of<GetSveImage>(context, listen: false).dx;
+
+    // Provider.of<GetSveImage>(context, listen: false).dy;
+    // Provider.of<GetSveImage>(context, listen: false).dy_text;
+    // Provider.of<GetSveImage>(context, listen: false).dx_text;
+    print(Provider.of<GetSveImage>(context, listen: false).dx);
+
+    print(Provider.of<GetSveImage>(context, listen: false).dy);
+    print(Provider.of<GetSveImage>(context, listen: false).dx_text);
+
+    print(
+        " this is dx_text in savephoto        ${Provider.of<GetSveImage>(context, listen: false).dy_text}");
+  }
+
+  Offset positionIcon = Offset(200, 400);
   Offset positiondata = Offset(100, 400);
   dateTime() {
     String datetime = DateFormat.jm('ar_SA').format(DateTime.now());
@@ -52,8 +74,18 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
           Stack(
             children: [
               Positioned(
-                  left: positiondata.dx,
-                  top: positiondata.dy,
+                  left: Offset(
+                          Provider.of<GetSveImage>(context, listen: false)
+                              .dx_text,
+                          Provider.of<GetSveImage>(context, listen: false)
+                              .dy_text)
+                      .dx,
+                  top: Offset(
+                          Provider.of<GetSveImage>(context, listen: false)
+                              .dx_text,
+                          Provider.of<GetSveImage>(context, listen: false)
+                              .dy_text)
+                      .dy,
                   child: Draggable(
                     onDraggableCanceled: (velocity, offset) {
                       setState(() {
@@ -68,13 +100,13 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
                             context,
                           ).datetime,
                           style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             color: Colors.white,
                           ),
                         ),
                         Text(' ، ',
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 20,
                               color: Colors.white,
                             )),
                         Text(
@@ -82,7 +114,7 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
                               context,
                             ).datedayes,
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 20,
                               color: Colors.white,
                             )),
                       ],
@@ -106,28 +138,6 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
                             size: 30,
                             color: Colors.white10,
                           ),
-
-                          // Text(
-                          //     Provider.of<GetSveImage>(
-                          //       context,
-                          //     ).datetime,
-                          //     style: TextStyle(
-                          //       fontSize: 3,
-                          //       color: Colors.black54,
-                          //     )),
-                          // Text(' ، ',
-                          //     style: TextStyle(
-                          //       fontSize: 3,
-                          //       color: Colors.black54,
-                          //     )),
-                          // Text(
-                          //     Provider.of<GetSveImage>(
-                          //       context,
-                          //     ).datedayes,
-                          //     style: TextStyle(
-                          //       fontSize: 3,
-                          //       color: Colors.black54,
-                          //     )),
                         ],
                       ),
                       //
@@ -157,8 +167,12 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
       floatingActionButton: Stack(
         children: [
           Positioned(
-            left: positionIcon.dx,
-            top: positionIcon.dy,
+            left: Offset(Provider.of<GetSveImage>(context, listen: false).dx,
+                    Provider.of<GetSveImage>(context, listen: false).dy)
+                .dx,
+            top: Offset(Provider.of<GetSveImage>(context, listen: false).dx,
+                    Provider.of<GetSveImage>(context, listen: false).dy)
+                .dy,
             // bottom: positionIcon.dx,
             child: Draggable(
               onDraggableCanceled: (velocity, offset) {
@@ -174,7 +188,7 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
                   elevation: 0,
                   child: Icon(
                     Icons.refresh_sharp,
-                    size: 45,
+                    size: 35,
                     color: Colors.white,
                   ),
                   onPressed: () {
@@ -185,10 +199,10 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
                           .datetime = dateTime();
                       Provider.of<GetSveImage>(context, listen: false)
                           .datedayes = dateDays();
-                      Provider.of<GetSveImage>(context, listen: false)
-                          .saveDateTime();
-                      Provider.of<GetSveImage>(context, listen: false)
-                          .saveDatedayes();
+                      // Provider.of<GetSveImage>(context, listen: false)
+                      //     .saveDateTime();
+                      // Provider.of<GetSveImage>(context, listen: false)
+                      //     .saveDatedayes();
                     });
                   }),
               feedback: Container(
@@ -198,7 +212,7 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
                       elevation: 0,
                       child: Icon(
                         Icons.refresh_sharp,
-                        size: 45,
+                        size: 35,
                       ),
                       onPressed: () {
                         setState(() {
@@ -206,10 +220,10 @@ class _DisplaySavePhotoState extends State<DisplaySavePhoto> {
                               .datetime = dateTime();
                           Provider.of<GetSveImage>(context, listen: false)
                               .datedayes = dateDays();
-                          Provider.of<GetSveImage>(context, listen: false)
-                              .saveDateTime();
-                          Provider.of<GetSveImage>(context, listen: false)
-                              .saveDatedayes();
+                          // Provider.of<GetSveImage>(context, listen: false)
+                          //     .saveDateTime();
+                          // Provider.of<GetSveImage>(context, listen: false)
+                          //     .saveDatedayes();
                         });
                       })),
             ),

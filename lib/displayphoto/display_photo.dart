@@ -21,11 +21,12 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
   void initState() {
     super.initState();
     Provider.of<GetSveImage>(context, listen: false).saveImage();
-    // Provider.of<GetSveImage>(context, listen: false).loadimage();
     Provider.of<GetSveImage>(context, listen: false).saveDateTime();
     Provider.of<GetSveImage>(context, listen: false).saveDatedayes();
   }
 
+  Offset positionIcon = Offset(200, 700);
+  Offset positiondata = Offset(100, 400);
   whenIconDrag() {
     return Container(
       child: Text(''),
@@ -34,8 +35,7 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
 
   String testing;
   String imagepath;
-  Offset positionIcon = Offset(200, 700);
-  Offset positiondata = Offset(100, 400);
+
   dateTime() {
     String datetime = DateFormat.jm('ar_SA').format(DateTime.now());
     print(datetime);
@@ -47,17 +47,6 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
     print(datedayes);
     return datedayes;
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   getimage();
-
-  //   print(widget.myimage.path);
-
-  //   print(widget.myimage.path);
-  // }
 
   @override
   Widget build(
@@ -114,32 +103,54 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
                     onDraggableCanceled: (velocity, offset) {
                       setState(() {
                         positiondata = offset;
+                        print(' original dx_text   ${offset.dx}');
+                        print(" priginal dy_text   ${offset.dy}");
+                        Provider.of<GetSveImage>(context, listen: false)
+                            .dx_text = offset.dx;
+                        Provider.of<GetSveImage>(context, listen: false)
+                            .dy_text = offset.dy;
+                        print(
+                            "this is a dx_text :  ${Provider.of<GetSveImage>(context, listen: false).dx_text}");
+                        print(
+                            "this is a dy_text :   ${Provider.of<GetSveImage>(context, listen: false).dy_text}");
+                        Provider.of<GetSveImage>(context, listen: false)
+                            .saveDxText();
+                        Provider.of<GetSveImage>(context, listen: false)
+                            .saveDyTrxt();
                       });
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          Provider.of<GetSveImage>(context, listen: false)
-                              .dateTime(),
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(' ، ',
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.white,
-                            )),
-                        Text(
+                    child: InkWell(
+                      onTap: () {
+                        Provider.of<GetSveImage>(context, listen: false)
+                            .saveDxText();
+                        Provider.of<GetSveImage>(context, listen: false)
+                            .saveDyTrxt();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
                             Provider.of<GetSveImage>(context, listen: false)
-                                .dateDays(),
+                                .dateTime(),
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 20,
                               color: Colors.white,
-                            )),
-                      ],
+                            ),
+                          ),
+                          Text(' ، ',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              )),
+                          Text(
+                              Provider.of<GetSveImage>(context, listen: false)
+                                  .dateDays(),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              )),
+                        ],
+                      ),
                     ),
                     feedback: Container(
                       //
@@ -160,25 +171,6 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
                             size: 30,
                             color: Colors.white10,
                           ),
-                          // Text(
-                          //     Provider.of<GetSveImage>(context, listen: false)
-                          //         .dateTime(),
-                          //     style: TextStyle(
-                          //       fontSize: 3,
-                          //       color: Colors.black54,
-                          //     )),
-                          // Text(' ، ',
-                          //     style: TextStyle(
-                          //       fontSize: 3,
-                          //       color: Colors.black54,
-                          //     )),
-                          // Text(
-                          //     Provider.of<GetSveImage>(context, listen: false)
-                          //         .dateDays(),
-                          //     style: TextStyle(
-                          //       fontSize: 3,
-                          //       color: Colors.black54,
-                          //     )),
                         ],
                       ),
                       //
@@ -188,38 +180,6 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
                   )),
             ],
           ),
-          // Align(
-          //   alignment: FractionalOffset(0.0, 0.1),
-          //   child: IconButton(
-          //       onPressed: () async {
-          //         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //           return MyHomePage();
-          //         }));
-          //       },
-          //       icon: Icon(
-          //         Icons.arrow_back,
-          //         color: Colors.white,
-          //         size: 30,
-          //       )),
-          // ),
-          // Align(
-          //   alignment: FractionalOffset(1, 0.1),
-          //   child: IconButton(
-          //       splashColor: Colors.white,
-          //       // onPressed: () {
-          //       //   Provider.of<GetSveImage>(context, listen: false).saveImage();
-          //       //   // Provider.of<GetSveImage>(context, listen: false).loadimage();
-          //       //   Provider.of<GetSveImage>(context, listen: false)
-          //       //       .saveDateTime();
-          //       //   Provider.of<GetSveImage>(context, listen: false)
-          //       //       .saveDatedayes();
-          //       // },
-          //       icon: Icon(
-          //         Icons.save,
-          //         color: Colors.teal,
-          //         size: 30,
-          //       )),
-          // ),
         ],
       ),
       floatingActionButton: Stack(
@@ -232,6 +192,14 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
               onDraggableCanceled: (velocity, offset) {
                 setState(() {
                   positionIcon = offset;
+                  print(' original dx   ${offset.dx}');
+                  print(" priginal dy   ${offset.dy}");
+                  Provider.of<GetSveImage>(context, listen: false).dx =
+                      offset.dx;
+                  Provider.of<GetSveImage>(context, listen: false).dy =
+                      offset.dy;
+                  Provider.of<GetSveImage>(context, listen: false).saveDx();
+                  Provider.of<GetSveImage>(context, listen: false).saveDy();
                 });
               },
               childWhenDragging: whenIconDrag(),
@@ -242,7 +210,7 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
                   elevation: 0,
                   child: Icon(
                     Icons.refresh_sharp,
-                    size: 45,
+                    size: 35,
                     color: Colors.white,
                   ),
                   onPressed: () {
@@ -255,6 +223,8 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
                           .saveDateTime();
                       Provider.of<GetSveImage>(context, listen: false)
                           .saveDatedayes();
+                      Provider.of<GetSveImage>(context, listen: false).saveDx();
+                      Provider.of<GetSveImage>(context, listen: false).saveDy();
                     });
                   }),
               feedback: Container(
@@ -264,7 +234,7 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
                       elevation: 0,
                       child: Icon(
                         Icons.refresh_sharp,
-                        size: 45,
+                        size: 35,
                       ),
                       onPressed: () {
                         setState(() {
@@ -276,6 +246,10 @@ class _DispkayPhotoState extends State<DispkayPhoto> {
                               .saveDateTime();
                           Provider.of<GetSveImage>(context, listen: false)
                               .saveDatedayes();
+                          Provider.of<GetSveImage>(context, listen: false)
+                              .saveDx();
+                          Provider.of<GetSveImage>(context, listen: false)
+                              .saveDy();
                         });
                       })),
             ),
